@@ -235,3 +235,24 @@ def calc_AUC(points):
         h = points[i + 1][0] - points[i][0]
         auc += ((a + b) / 2) * h
     return auc
+
+
+def calc_histogram(error_list, bins=20):
+    min_val = min(error_list)
+    norm = [x + abs(min_val) for x in error_list]
+    norm = [float(i) / max(norm) for i in norm]
+    histogram = []
+    for i in range(bins):
+        histogram.append(0)
+    step = 1 / bins
+    for i in range(bins):
+        temp = []
+        for val in norm:
+            lower_boundary = i * step
+            upper_boundary = (i + 1) * step
+            if lower_boundary <= val <= upper_boundary:
+                histogram[i] += 1
+                temp.append(val)
+        for val in temp:
+            norm.remove(val)
+    return histogram
