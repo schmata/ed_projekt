@@ -31,6 +31,7 @@ if __name__ == '__main__':
             ], key='frame_model2', size=(300, 250),
                      tooltip="Pogrubiona czcionka oznacza że wyróżniony wyznacznik jest lepszy")
         ],
+        [sg.Text('', key='graph_title_text', visible=True, justification='center', expand_x=True)],
         [sg.Graph((300, 250), (0, 0), (1, 1), float_values=True, background_color='white',
                   key='model1_graph'),
          sg.Graph((300, 250), (0, 0), (1, 1), float_values=True, background_color='white',
@@ -214,6 +215,8 @@ if __name__ == '__main__':
                     window['model2_text8'].update(font='Any 10 bold')
                     window['model1_text8'].update(font='Any 10 normal')
 
+                window['graph_title_text'].update("Krzywe ROC")
+
                 window['model1_graph'].erase()
                 window['model1_graph'].draw_line((0, 0), (1, 1), 'blue', 1)
                 for i in range(0, 10, 2):
@@ -265,10 +268,12 @@ if __name__ == '__main__':
                                               visible=True)
                 window['model2_text4'].update("MAPE: " + str(round(model_2_quality_assessment['mape'], 3)) + "%",
                                               visible=True)
-                window['model1_text5'].update("", visible=True)
-                window['model1_text6'].update("", visible=True)
-                window['model1_text7'].update("", visible=True)
-                window['model1_text8'].update("", visible=True)
+                window['model2_text5'].update("", visible=True)
+                window['model2_text6'].update("", visible=True)
+                window['model2_text7'].update("", visible=True)
+                window['model2_text8'].update("", visible=True)
+
+                window['positive_label_text'].update("", visible=True)
 
                 if model_1_quality_assessment['mae'] < model_2_quality_assessment['mae']:
                     window['model1_text1'].update(font='Any 10 bold')
@@ -315,8 +320,9 @@ if __name__ == '__main__':
                                 (1.0, 0)
                                 ]
 
+                window['graph_title_text'].update("Histogramy różnic między wartościami")
+
                 window['model1_graph'].erase()
-                # window['model1_graph'].draw_line((0, 0), (1, 1), 'blue', 1)
                 for val, i in zip(model_1_histogram, range(len(model_1_histogram))):
                     window['model1_graph'].draw_rectangle((i * 0.05, val), ((i + 1) * 0.05, 0), 'lightblue', 'black', 1)
                 for i in range(0, 10, 2):
@@ -326,7 +332,6 @@ if __name__ == '__main__':
                     window['model1_graph'].draw_text(str(i / 10), (0.05, i / 10), 'black')
 
                 window['model2_graph'].erase()
-                # window['model2_graph'].draw_line((0, 0), (1, 1), 'blue', 1)
                 for val, i in zip(model_2_histogram, range(len(model_2_histogram))):
                     window['model2_graph'].draw_rectangle((i * 0.05, val), ((i + 1) * 0.05, 0), 'lightblue', 'black', 1)
                 for i in range(0, 10, 2):
