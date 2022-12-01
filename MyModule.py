@@ -1,4 +1,3 @@
-import numpy as np
 
 
 def classification_model_quality_assessment(confusion_matrix):
@@ -193,11 +192,7 @@ def confusion_matrix_thresholds(predictions_by_threshold, probability_data, labe
 
 def ROC_curve(probability_data, labels):
     import multiprocessing as mp
-    # tmp = []
-    # tmp[0] = list(map(lambda x: x.replace(labels[0], '1'), probability_data[0]))
-    # tmp[0] = list(map(lambda x: x.replace(labels[1], '0'), probability_data[0]))
     thresholds = get_unique_values(probability_data[1])
-    # thresholds.append('.0')
     thresholds.sort(reverse=True)
     predictions_by_thresholds = []
     for threshold in thresholds:
@@ -210,11 +205,6 @@ def ROC_curve(probability_data, labels):
         predictions_by_thresholds.append(tmp)
 
     pool = mp.Pool()
-    # matrices = [pool.apply(confusion_matrix_thresholds,
-    #                        args=(predictions_by_threshold,
-    #                              probability_data,
-    #                              labels))
-    #             for predictions_by_threshold in predictions_by_thresholds]
     matrices = pool.starmap(confusion_matrix_thresholds, [(predictions_by_threshold, probability_data, labels)
                                                           for predictions_by_threshold in predictions_by_thresholds])
     pool.close()

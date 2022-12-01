@@ -108,12 +108,8 @@ if __name__ == '__main__':
                 positive_label = labels[0]
 
                 window['positive_label_text'].update("Klasa pozytywna: " + str(positive_label))
-                # # start_time = time.time()
                 model_1_ROC_points = MyModule.ROC_curve(model_1_probability_data, labels)
-                # # print("Time1: ", time.time() - start_time)
-                # # start_time = time.time()
                 model_2_ROC_points = MyModule.ROC_curve(model_2_probability_data, labels)
-                # # print("Time2: ", time.time() - start_time)
                 model_1_auc = MyModule.calc_AUC(model_1_ROC_points)
                 model_2_auc = MyModule.calc_AUC(model_2_ROC_points)
 
